@@ -1,8 +1,5 @@
 # OlyLog
 
-[![star](https://gitee.com/olycream/olylog/badge/star.svg?theme=dark)](https://gitee.com/olycream/olylog/stargazers)
-[![fork](https://gitee.com/olycream/olylog/badge/fork.svg?theme=dark)](https://gitee.com/olycream/olylog/members)
-
 > 便捷、灵敏、持续开发。
 
 ## 目录
