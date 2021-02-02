@@ -1,6 +1,5 @@
 import json
 import os
-import time
 import datetime
 
 
@@ -13,8 +12,8 @@ class Events(object):
         # events
         self.events = []
         # start logging events
-        self.events.append(
-            (datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S.%f]"), 0, "Start logging."))
+        self.events.append((datetime.datetime.now().strftime(
+            "[%Y-%m-%d %H:%M:%S.%f]"), 0, "Start logging."))
         # tiger of is running
         self.running = True
         # set the name of the logger
@@ -33,7 +32,7 @@ class Events(object):
         # if the logger is running
         if self.running:
             # ATTENTION: DO NOT USE "level<=6 and level>=0"!
-            if level == 0 or level == 1 or level == 2 or level == 3 or level == 4 or level == 5 or level == 6:
+            if level in (0, 1, 2, 3, 4, 5, 6):
                 # log the events
                 self.events.append(
                     (datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S.%f]"), level, msg))
