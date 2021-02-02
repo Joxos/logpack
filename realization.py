@@ -1,7 +1,6 @@
-import json.dumps
-import os.path.exsist
-import os.mkdir
-import datetime.datetime.now
+import json
+import os
+import datetime
 from sys import exit
 from collections import OrderedDict
 
@@ -35,18 +34,6 @@ class Events(object):
                 "warning", "Can't find settings.json. Use default instead.")
         # read the settings
         self.settings = Settings(name)
-        if not os.path.exists(self.settings.path):
-            self.append(
-                "warning", "Can't find the target directory. Creating...")
-            try:
-                os.mkdir(self.settings.path)
-            except:
-                self.append(
-                    "fatal", "Can't create the target directory, exit.")
-                exit(1)
-            else:
-                self.append(
-                    "info", "Successfully create the target directory.")
 
     def append(self, level, msg):
         self.events.append(Event(level, msg))
@@ -75,10 +62,10 @@ class Events(object):
             for event in self.events:
                 msg += event.time+'['+event.level+']'+' '+event.msg+'\n'
             return msg
-        if settings.format == "json":
+        if self.settings.format == "json":
             # add key-value
             msg = OrderedDict()
-            for event in events:
+            for event in self.events:
                 msg[event.time] = {"level": event.level, "message": event.msg}
             return json.dumps(msg, indent=2)
 
