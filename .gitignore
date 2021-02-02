@@ -1,0 +1,8 @@
+__pycache__
+*.un~
+.vim/
+log/
+__init__.py
+dist/
+olylog.egg-info/
+setup.py

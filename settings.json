@@ -1,0 +1,3 @@
+{
+    "logger":{"path":"./log/","format":"log","output":"file"}
+}
