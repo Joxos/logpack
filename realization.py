@@ -16,7 +16,7 @@ class Event:
         self.msg = msg
 
 
-class Events(object):
+class Appender(object):
     '''
     Logical of events.
     '''
@@ -38,7 +38,7 @@ class Events(object):
     def append(self, level, msg):
         self.events.append(Event(level, msg))
 
-    def write(self):
+    def dump(self):
         # ensure the directory is exsist
         if not os.path.exists(self.settings.path):
             self.append(
@@ -52,8 +52,11 @@ class Events(object):
             else:
                 self.append(
                     "info", "Successfully create the target directory.")
+        self.append("info", "Record before dump events.")
         with open(self.settings.path+self.name, 'a') as f:
             f.write(self.format())
+        # clear the event list
+        self.events = []
 
     def format(self):
         if self.settings.format == "log":
@@ -76,7 +79,7 @@ class Events(object):
         # stop logging events
         self.append("info", "Stop logging.")
         # write it
-        self.write()
+        self.dump()
 
 
 class Settings(object):
