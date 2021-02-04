@@ -1,7 +1,6 @@
 import json
 import os
 import datetime
-from sys import exit
 from collections import OrderedDict
 
 
@@ -24,39 +23,24 @@ class Appender(object):
     def __init__(self, name):
         # events
         self.events = []
-        # start logging events
-        self.append("info", "Start logging.")
         # set the name of the logger
         self.name = name
+        # running tiger
+        self.is_running = True
         # if there is no "settings.json", then warn the user
         if not os.path.exists("./settings.json"):
             self.append(
                 "warning", "Can't find settings.json. Use default instead.")
         # read the settings
         self.settings = Settings(name)
+        # start logging events
+        self.append("info", "Start logging.")
 
     def append(self, level, msg):
-        self.events.append(Event(level, msg))
-
-    def dump(self):
-        # ensure the directory is exsist
-        if not os.path.exists(self.settings.path):
-            self.append(
-                "warning", "Can't find the target directory. Creating...")
-            try:
-                os.mkdir(self.settings.path)
-            except:
-                self.append(
-                    "fatal", "Can't create the target directory, exit.")
-                exit(1)
-            else:
-                self.append(
-                    "info", "Successfully create the target directory.")
-        self.append("info", "Record before dump events.")
-        with open(self.settings.path+self.name, 'a') as f:
-            f.write(self.format())
-        # clear the event list
-        self.events = []
+        if hasattr(self, "is_running") and self.is_running:
+            self.events.append(Event(level, msg))
+        else:
+            self.events.append(Event(level, msg))
 
     def format(self):
         if self.settings.format == "log":
@@ -71,15 +55,6 @@ class Appender(object):
             for event in self.events:
                 msg[event.time] = {"level": event.level, "message": event.msg}
             return json.dumps(msg, indent=2)
-
-    def stop(self):
-        '''
-        Stop the logger.
-        '''
-        # stop logging events
-        self.append("info", "Stop logging.")
-        # write it
-        self.dump()
 
 
 class Settings(object):
