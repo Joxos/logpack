@@ -15,7 +15,7 @@ class Event:
         self.msg = msg
 
 
-class Appender(object):
+class Logger(object):
     '''
     Logical of events.
     '''

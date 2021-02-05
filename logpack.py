@@ -3,15 +3,15 @@ Interface of the olylog.
 """
 import os
 from sys import exit
-from realization import Appender
+from realization import Logger
 
 
-class Logger:
+class LogManager:
     def __init__(self):
         self.appenders = {}
 
     def register(self, name):
-        self.appenders[name] = Appender(name)
+        self.appenders[name] = Logger(name)
         self.append(name, "info", "Registered the appender.")
         self.start(name)
 

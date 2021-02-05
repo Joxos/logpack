@@ -1,5 +1,5 @@
-from olylog import Logger
-logger = Logger()
+from logpack import LogManager
+logger = LogManager()
 logger.register("network")
 logger.append("network", "info", "A new visitor!")
 logger.stop("network")
