@@ -1,3 +1,7 @@
 {
-    "logger":{"path":"./log/","format":"json","output":"file"}
+    "network":{
+	"destination":"./logs/",
+	"output_format":"json",
+	"dump_pause_time":10
+    }
 }

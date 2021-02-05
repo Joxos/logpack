@@ -12,19 +12,18 @@ class LogManager:
 
     def register(self, name):
         self.appenders[name] = Logger(name)
-        self.append(name, "info", "Registered the appender.")
-        self.start(name)
+        self.append(name, "info", "Register and start the logger.")
 
     def append(self, name, level, msg):
         self.appenders[name].append(level, msg)
 
     def dump(self, name):
         # ensure the directory is exsist
-        if not os.path.exists(self.appenders[name].settings.path):
+        if not os.path.exists(self.appenders[name].settings.destination):
             self.append(name, "warning",
                         "Can't find the target directory. Creating...")
             try:
-                os.mkdir(self.appenders[name].settings.path)
+                os.mkdir(self.appenders[name].settings.destination)
             except:
                 self.append(name, "fatal",
                             "Can't create the target directory, exit.")
@@ -33,7 +32,7 @@ class LogManager:
                 self.append(
                     name, "info", "Successfully create the target directory.")
         self.append(name, "info", "Record before dump the events.")
-        with open(self.appenders[name].settings.path+name, 'a') as f:
+        with open(self.appenders[name].settings.destination+name, 'a') as f:
             f.write(self.appenders[name].format())
         # clear the event list
         self.appenders[name].events = []
@@ -48,7 +47,8 @@ class LogManager:
         self.appenders[name].is_running = True
         self.append(name, "info", "Start logging.")
 
-    def destroy(self, name, dump=True):
+    def delete(self, name, dump=True):
+        self.append(name, "info", "Delete the logger.")
         if dump:
             self.dump(name)
         del self.appenders[name]

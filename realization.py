@@ -1,11 +1,12 @@
 import json
 import os
-import datetime
+from datetime import datetime
+from random import randint
 from collections import OrderedDict
 
 
 def get_time():
-    return datetime.datetime.now().strftime("[%Y-%m-%d %H:%M:%S.%f]")
+    return datetime.now().strftime("[%Y-%m-%d %H:%M:%S.%f]")
 
 
 class Event:
@@ -27,10 +28,6 @@ class Logger(object):
         self.name = name
         # running tiger
         self.is_running = True
-        # if there is no "settings.json", then warn the user
-        if not os.path.exists("./settings.json"):
-            self.append(
-                "warning", "Can't find settings.json. Use default instead.")
         # read the settings
         self.settings = Settings(name)
 
@@ -39,17 +36,18 @@ class Logger(object):
             self.events.append(Event(level, msg))
 
     def format(self):
-        if self.settings.format == "log":
+        if self.settings.output_format == "log":
             # splicing strings
             msg = ""
             for event in self.events:
                 msg += event.time+'['+event.level+']'+' '+event.msg+'\n'
             return msg
-        if self.settings.format == "json":
+        if self.settings.output_format == "json":
             # add key-value
             msg = OrderedDict()
             for event in self.events:
-                msg[event.time] = {"level": event.level, "message": event.msg}
+                msg[event.time + str(randint(0, 1000))
+                    ] = {"level": event.level, "message": event.msg}
             return json.dumps(msg, indent=2)
 
 
@@ -59,22 +57,32 @@ class Settings(object):
     '''
 
     def __init__(self, name):
-        # default settings
-        self.path = "./log/"
-        self.format = "log"
-        self.output = "file"
-        # if exists "settings.json"
+        # Default Settings:
+        # destination
+        # if it is a directory, the file name is the logger name
+        # if it is a file, then will dump into it
+        self.destination = "./log/"
+
+        # output format
+        # supported format:
+        #     - log
+        #     - json
+        self.output_format = "log"
+
+        # dump pause time
+        # 0 or False: real-time dump
+        # x: dump after x second(s)
+        # True: disable the automatically dump feature
+        self.dump_pause_time = 60
+
         if os.path.exists("./settings.json"):
-            # read the settings
-            with open("./settings.json", 'r') as json_settings:
-                settings = json.loads(json_settings.read())
-            # if have own settings
-            if name in settings.keys():
-                # read all
-                own_settings = settings[name]
-                if "path" in own_settings.keys():
-                    self.path = own_settings["path"]
-                if "format" in own_settings.keys():
-                    self.format = own_settings["format"]
-                if "output" in own_settings.keys():
-                    self.output = own_settings["output"]
+            with open("./settings.json", 'r') as f:
+                own_settings = json.load(f).get(name)
+            if own_settings:
+                keys = own_settings.keys()
+                if "destination" in keys:
+                    self.destination = own_settings["destination"]
+                if "output_format" in keys:
+                    self.output_format = own_settings["output_format"]
+                if "dump_pause_time" in keys:
+                    self.dump_pause_time = own_settings["dump_pause_time"]
