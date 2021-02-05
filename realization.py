@@ -25,17 +25,18 @@ class Appender(object):
         self.events = []
         # set the name of the logger
         self.name = name
+        # running tiger
+        self.is_running = True
         # if there is no "settings.json", then warn the user
         if not os.path.exists("./settings.json"):
             self.append(
                 "warning", "Can't find settings.json. Use default instead.")
         # read the settings
         self.settings = Settings(name)
-        # start logging events
-        self.append("info", "Start logging.")
 
     def append(self, level, msg):
-        self.events.append(Event(level, msg))
+        if self.is_running:
+            self.events.append(Event(level, msg))
 
     def format(self):
         if self.settings.format == "log":
