@@ -1,11 +1,18 @@
-from logpack import LogManager
-
+# Part 1:
+# Learn the Configuration
 
 # there is an example of settings in settings.json
 # you can try to customize it
 # then start the tutorial
 
-# create the manager
+
+# Part 2:
+# Tutorial Content
+
+# import the LogManager
+from logpack import LogManager
+
+# create the log manager
 log_manager = LogManager()
 
 # register the network logger
@@ -44,9 +51,17 @@ log_manager.delete("network")
 # view the result in ./logs/
 
 
-# speed test code, uncomment if you want to test the speed:
+# Part 3:
+# Speed Test Code
+# test data:
+#   1. 2.06934*10^-5 s/line  2021/2/5
+# uncomment if you want to test the speed
+# from logpack import LogManager
+# log_manager = LogManager()
+# log_manager.register("network")
 # for i in range(int(input("Number to test: "))):
-#     logger.append("network", "info", "A new visitor!")
+#     log_manager.append("network", "info", "A new visitor!")
+# log_manager.delete("network")
 
 
 # TODO:

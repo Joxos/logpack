@@ -22,11 +22,11 @@ pip install logpack
 
 ## 用法
 
-`example.py`里面有**渐进式的教学**。读源码是个好习惯，这个项目也不复杂。
+`tutorial.py`里面有**渐进式的教学**。读源码是个好习惯，这个项目也不复杂。
 
 ## 展望
 
-参见`example.py`。
+参见`tutorial.py`。
 
 ## 开原许可
 

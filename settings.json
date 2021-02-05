@@ -1,7 +1,7 @@
 {
     "network":{
 	"destination":"./logs/",
-	"output_format":"json",
+	"output_format":"log",
 	"dump_pause_time":10
     }
 }
