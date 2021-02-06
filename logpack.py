@@ -3,7 +3,7 @@ Interface of the olylog.
 """
 import os
 from sys import exit
-from realization import Logger
+from logcore import Logger
 
 
 class LogManager:

@@ -72,5 +72,5 @@ log_manager.delete("network")
 #  rotation and retention
 #  caught the error using decorator
 #  color support of the logging message
-#  Asynchronous, Thread-safe, Multiprocess-safe
-#  https://github.com/Delgan/loguru#fully-descriptive-exceptions
+#  asynchronous, thread-safe, multiprocess-safe
+#  fully descriptive exceptions

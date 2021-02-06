@@ -1,12 +1,16 @@
 import json
 import os
 from datetime import datetime
+from time import localtime, strftime
 from random import randint
 from collections import OrderedDict
 
 
+time_zone = strftime("%z", localtime())
+
+
 def get_time():
-    return datetime.now().strftime("[%Y-%m-%d %H:%M:%S.%f]")
+    return datetime.now().strftime("[%F %T:%f ")+time_zone+']'
 
 
 class Event:
