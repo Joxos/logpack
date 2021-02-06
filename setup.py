@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="logpack",
-    version="1.3",
+    version="1.4",
     author="Joxos",
     author_email="xujunhao61@163.com",
     description="Log for Python!",

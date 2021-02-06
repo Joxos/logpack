@@ -17,7 +17,7 @@
 ## 安装
 
 ```shell
-pip install logpack
+pip install -i https://pypi.python.org/simple logpack
 ```
 
 ## 用法
