@@ -28,6 +28,6 @@ pip install -i https://pypi.python.org/simple logpack
 
 参见`tutorial.py`。
 
-## 开原许可
+## 开源许可
 
 遵循AGPL v3.0开源协议。
