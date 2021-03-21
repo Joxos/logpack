@@ -55,7 +55,8 @@ log_manager.delete("network")
 # Speed Test Code
 # test data:
 #   1. 2.06934*10^-5 s/line  2021/2/5
-# uncomment if you want to test the speed
+# uncomment the codes below if you want to test the speed:
+
 # from logpack import LogManager
 # log_manager = LogManager()
 # log_manager.register("network")

@@ -1,23 +1,7 @@
 import json
 import os
-from datetime import datetime
-from time import localtime, strftime
 from random import randint
 from collections import OrderedDict
-
-
-time_zone = strftime("%z", localtime())
-
-
-def get_time():
-    return datetime.now().strftime("[%F %T:%f ")+time_zone+']'
-
-
-class Event:
-    def __init__(self, level, msg):
-        self.time = get_time()
-        self.level = level
-        self.msg = msg
 
 
 class Logger(object):
@@ -34,10 +18,6 @@ class Logger(object):
         self.is_running = True
         # read the settings
         self.settings = Settings(name)
-
-    def append(self, level, msg):
-        if self.is_running:
-            self.events.append(Event(level, msg))
 
     def format(self):
         if self.settings.output_format == "log":

@@ -2,8 +2,20 @@
 Interface of the olylog.
 """
 import os
+from datetime import datetime
+from time import localtime, strftime
 from sys import exit
 from logcore import Logger
+
+
+class Event:
+    def __init__(self, level, msg):
+        # we think the server won't move when running
+        # so we execute it once, and no more
+        self.time_zone = strftime("%z", localtime())
+        self.time = datetime.now().strftime("[%F %T:%f ")+self.time_zone+']'
+        self.level = level
+        self.msg = msg
 
 
 class LogManager:
@@ -15,7 +27,8 @@ class LogManager:
         self.append(name, "info", "Register and start the logger.")
 
     def append(self, name, level, msg):
-        self.appenders[name].append(level, msg)
+        if self.appenders[name].is_running:
+            self.appenders[name].events.append(Event(level, msg))
 
     def dump(self, name):
         # ensure the directory is exsist
@@ -31,7 +44,9 @@ class LogManager:
             else:
                 self.append(
                     name, "info", "Successfully create the target directory.")
+        # add a recode before dump the events
         self.append(name, "info", "Record before dump the events.")
+        # dump them
         with open(self.appenders[name].settings.destination+name, 'a') as f:
             f.write(self.appenders[name].format())
         # clear the event list
